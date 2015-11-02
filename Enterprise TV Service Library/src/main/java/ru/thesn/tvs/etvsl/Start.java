@@ -7,7 +7,7 @@ public class Start {
     public static void main(String[] args) {
         List<String> list = new ArrayList<>();
         new Thread(
-                () -> System.out.println("hello world")
+                () -> System.out.println("Hello World")
         ).start();
     }
 }
