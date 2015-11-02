@@ -1,7 +1,8 @@
 package ru.thesn.tvs.etvsl.repository;
 
-/**
- * Created by Никита on 01.11.2015.
- */
-public interface LineupRepository {
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import ru.thesn.tvs.etvsl.model.Lineup;
+
+public interface LineupRepository extends JpaRepository<Lineup, Long> {
 }

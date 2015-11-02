@@ -1,7 +1,7 @@
 package ru.thesn.tvs.etvsl.repository;
 
-/**
- * Created by Никита on 01.11.2015.
- */
-public interface VODContentCollectionRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+import ru.thesn.tvs.etvsl.model.VODContentCollection;
+
+public interface VODContentCollectionRepository extends JpaRepository<VODContentCollection, Long> {
 }

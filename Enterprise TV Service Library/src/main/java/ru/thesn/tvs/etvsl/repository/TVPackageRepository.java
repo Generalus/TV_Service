@@ -1,7 +1,7 @@
 package ru.thesn.tvs.etvsl.repository;
 
-/**
- * Created by Никита on 01.11.2015.
- */
-public interface TVPackageRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+import ru.thesn.tvs.etvsl.model.TVPackage;
+
+public interface TVPackageRepository extends JpaRepository<TVPackage, Long> {
 }
