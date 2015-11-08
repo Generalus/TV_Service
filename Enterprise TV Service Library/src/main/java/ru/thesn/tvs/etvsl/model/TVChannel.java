@@ -1,10 +1,8 @@
 package ru.thesn.tvs.etvsl.model;
 
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "CHANNEL")
@@ -15,6 +13,15 @@ public class TVChannel {
 
     @Column(name = "NAME")
     private String name;
+
+    @Column(name = "CONTENT_ID", nullable = false)
+    private Long contentID;
+
+    @ManyToMany(mappedBy = "channels", fetch = FetchType.EAGER)
+    private Set<TVPackage> packages;
+
+    @ManyToMany(mappedBy = "channels", fetch = FetchType.EAGER)
+    private Set<TVPackage> lineups;
 
     public Long getSourceID() {
         return sourceID;
@@ -30,5 +37,29 @@ public class TVChannel {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Long getContentID() {
+        return contentID;
+    }
+
+    public void setContentID(Long contentID) {
+        this.contentID = contentID;
+    }
+
+    public Set<TVPackage> getPackages() {
+        return packages;
+    }
+
+    public void setPackages(Set<TVPackage> packages) {
+        this.packages = packages;
+    }
+
+    public Set<TVPackage> getLineups() {
+        return lineups;
+    }
+
+    public void setLineups(Set<TVPackage> lineups) {
+        this.lineups = lineups;
     }
 }

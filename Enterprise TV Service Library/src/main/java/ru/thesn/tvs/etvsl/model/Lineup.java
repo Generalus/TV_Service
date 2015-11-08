@@ -1,9 +1,7 @@
 package ru.thesn.tvs.etvsl.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "LINEUP")
@@ -14,6 +12,15 @@ public class Lineup {
 
     @Column(name = "NAME")
     private String name;
+
+    @ManyToMany(mappedBy = "lineups", fetch = FetchType.EAGER)
+    private Set<TVPackage> packages;
+
+    @ManyToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name="LINEUP-CHANNEL",
+            joinColumns=@JoinColumn(name="LINEUP"),
+            inverseJoinColumns=@JoinColumn(name="CHANNEL"))
+    private Set<Lineup> channels;
 
     public Long getAreaID() {
         return areaID;
@@ -29,5 +36,21 @@ public class Lineup {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Set<TVPackage> getPackages() {
+        return packages;
+    }
+
+    public void setPackages(Set<TVPackage> packages) {
+        this.packages = packages;
+    }
+
+    public Set<Lineup> getChannels() {
+        return channels;
+    }
+
+    public void setChannels(Set<Lineup> channels) {
+        this.channels = channels;
     }
 }

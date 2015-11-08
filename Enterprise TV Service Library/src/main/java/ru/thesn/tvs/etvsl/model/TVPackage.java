@@ -1,13 +1,8 @@
 package ru.thesn.tvs.etvsl.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.Set;
 
-/**
- * Created by Никита on 01.11.2015.
- */
 
 @Entity
 @Table(name = "TV_PACKAGE")
@@ -18,6 +13,34 @@ public class TVPackage {
 
     @Column(name = "NAME")
     private String name;
+
+    @ManyToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name="PACKAGE-LINEUP",
+            joinColumns=@JoinColumn(name="PACKAGE"),
+            inverseJoinColumns=@JoinColumn(name="LINEUP"))
+    private Set<Lineup> lineups;
+
+    @ManyToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name="PACKAGE-CHANNEL",
+            joinColumns=@JoinColumn(name="PACKAGE"),
+            inverseJoinColumns=@JoinColumn(name="CHANNEL"))
+    private Set<Lineup> channels;
+
+    public Set<Lineup> getLineups() {
+        return lineups;
+    }
+
+    public void setLineups(Set<Lineup> lineups) {
+        this.lineups = lineups;
+    }
+
+    public Set<Lineup> getChannels() {
+        return channels;
+    }
+
+    public void setChannels(Set<Lineup> channels) {
+        this.channels = channels;
+    }
 
     public Long getOfferingID() {
         return offeringID;
