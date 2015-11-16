@@ -1,6 +1,7 @@
 package ru.thesn.tvs.etvsl.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.thesn.tvs.etvsl.exception.EntityNotFound;
 import ru.thesn.tvs.etvsl.model.TVChannel;
@@ -12,6 +13,7 @@ import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class TVPackageServiceImpl implements TVPackageService {
 
     @Autowired

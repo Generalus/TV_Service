@@ -40,5 +40,5 @@
     <tx:annotation-driven />
 
     <jpa:repositories base-package="ru.thesn.tvs.etvsl.repository" />
-    <context:component-scan base-package="ru.thesn.tvs.etvsl.service" />
+    <context:component-scan base-package="ru.thesn.tvs.etvsl.service.impl" />
 </beans>

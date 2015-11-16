@@ -10,7 +10,7 @@ import ru.thesn.tvs.etvsl.model.Response;
 import ru.thesn.tvs.etvsl.service.TVPackageService;
 
 @Controller
-@RequestMapping("/")
+@RequestMapping("/json")
 public class MyController {
 
     @Autowired
