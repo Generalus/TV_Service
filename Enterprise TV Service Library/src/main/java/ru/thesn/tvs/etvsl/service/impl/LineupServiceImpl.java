@@ -1,5 +1,6 @@
 package ru.thesn.tvs.etvsl.service.impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import ru.thesn.tvs.etvsl.exception.EntityNotFound;
 import ru.thesn.tvs.etvsl.model.Lineup;
@@ -8,12 +9,14 @@ import ru.thesn.tvs.etvsl.repository.LineupRepository;
 import ru.thesn.tvs.etvsl.service.LineupService;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class LineupServiceImpl implements LineupService {
 
-    @Resource
-    private LineupRepository repository;
+    @Autowired
+    LineupRepository repository;
 
     @Override
     @Transactional
@@ -36,7 +39,10 @@ public class LineupServiceImpl implements LineupService {
     @Override
     @Transactional
     public List<Lineup> findAll() {
-        return repository.findAll();
+        List<Lineup> list = new ArrayList<>();
+        for(Lineup lineup: repository.findAll())
+            list.add(lineup);
+        return list;
     }
 
     @Override

@@ -1,21 +1,24 @@
 package ru.thesn.tvs.etvsl.service.impl;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import ru.thesn.tvs.etvsl.exception.EntityNotFound;
+import ru.thesn.tvs.etvsl.model.Lineup;
 import ru.thesn.tvs.etvsl.model.TVChannel;
 import ru.thesn.tvs.etvsl.model.TVPackage;
 import ru.thesn.tvs.etvsl.repository.TVChannelRepository;
 import ru.thesn.tvs.etvsl.service.TVChannelService;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
 public class TVChannelServiceImpl implements TVChannelService {
 
-    @Resource
-    private TVChannelRepository repository;
+    @Autowired
+    TVChannelRepository repository;
 
     @Override
     @Transactional
@@ -38,7 +41,10 @@ public class TVChannelServiceImpl implements TVChannelService {
     @Override
     @Transactional
     public List<TVChannel> findAll() {
-        return repository.findAll();
+        List<TVChannel> list = new ArrayList<>();
+        for(TVChannel tvChannel: repository.findAll())
+            list.add(tvChannel);
+        return list;
     }
 
     @Override
