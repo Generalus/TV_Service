@@ -17,8 +17,8 @@ public class MyController {
     TVPackageService service;
 
     @RequestMapping(value = "{key}", method = RequestMethod.GET)
-    @ResponseBody
-    public Response getResponseInJSON(@PathVariable String key) {
+
+    public @ResponseBody Response getResponseInJSON(@PathVariable String key) {
         Response response = new Response();
         response.setMessage("OK");
         return response;
