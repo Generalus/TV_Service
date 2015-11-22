@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="Enterprise TV Service Library:war">
+    <output-path>$PROJECT_DIR$/Enterprise TV Service Library/target</output-path>
+    <root id="archive" name="ETVSL-1.0-SNAPSHOT.war">
+      <element id="artifact" artifact-name="Enterprise TV Service Library:war exploded" />
+    </root>
+  </artifact>
+</component>

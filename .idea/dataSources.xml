@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="DataSourceManagerImpl" format="xml" hash="318343706">
+  <component name="DataSourceManagerImpl" format="xml" hash="2698264075">
     <data-source source="LOCAL" name="MySQL - tvs@localhost" uuid="b4a6f251-f499-4771-90c0-b48f65972013">
       <driver-ref>mysql</driver-ref>
       <synchronize>true</synchronize>
@@ -13,6 +13,12 @@
         <property name="characterSetResults" value="utf8" />
         <property name="yearIsDateType" value="false" />
       </driver-properties>
+    </data-source>
+    <data-source source="LOCAL" name="Derby (Embedded) - jdbc:derby:;create=true" uuid="9a38c9b9-e1b6-4828-a8b3-a5cd82fa64df">
+      <driver-ref>derby.embedded</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.apache.derby.jdbc.EmbeddedDriver</jdbc-driver>
+      <jdbc-url>jdbc:derby:;create=true</jdbc-url>
     </data-source>
   </component>
 </project>
