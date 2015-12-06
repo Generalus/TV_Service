@@ -17,13 +17,13 @@ import java.util.List;
 import java.util.Set;
 
 @Service
+@Transactional
 public class TVChannelServiceImpl implements TVChannelService {
 
     @Autowired
     TVChannelRepository repository;
 
     @Override
-    @Transactional
     public TVChannel create(TVChannel channel) {
         return repository.save(channel);
     }
@@ -41,7 +41,7 @@ public class TVChannelServiceImpl implements TVChannelService {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public List<TVChannel> findAll() {
         List<TVChannel> list = new ArrayList<>();
         for(TVChannel tvChannel: repository.findAll())
@@ -50,13 +50,19 @@ public class TVChannelServiceImpl implements TVChannelService {
     }
 
     @Override
-    @Transactional
     public TVChannel update(TVChannel channel) throws EntityNotFound {
-        return null;
+        TVChannel cur = repository.findOne(channel.getSourceID());
+        if (cur == null)
+            throw new EntityNotFound();
+        cur.setContentID(channel.getContentID());
+        cur.setLineups(channel.getLineups());
+        cur.setName(channel.getName());
+        cur.setPackages(channel.getPackages());
+        return cur;
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public TVChannel findById(long id) {
         return repository.findOne(id);
     }

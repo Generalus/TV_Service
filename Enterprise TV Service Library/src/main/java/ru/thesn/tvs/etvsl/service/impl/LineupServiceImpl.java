@@ -15,13 +15,13 @@ import java.util.Collections;
 import java.util.List;
 
 @Service
+@Transactional
 public class LineupServiceImpl implements LineupService {
 
     @Autowired
     LineupRepository repository;
 
     @Override
-    @Transactional
     public Lineup create(Lineup lineup) {
         return repository.save(lineup);
     }
@@ -39,7 +39,7 @@ public class LineupServiceImpl implements LineupService {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public List<Lineup> findAll() {
         List<Lineup> list = new ArrayList<>();
         for(Lineup lineup: repository.findAll())
@@ -48,13 +48,18 @@ public class LineupServiceImpl implements LineupService {
     }
 
     @Override
-    @Transactional
     public Lineup update(Lineup lineup) throws EntityNotFound {
-        return null;
+        Lineup cur = repository.findOne(lineup.getAreaID());
+        if (cur == null)
+            throw new EntityNotFound();
+        cur.setName(lineup.getName());
+        cur.setPackages(lineup.getPackages());
+        cur.setChannels(lineup.getChannels());
+        return cur;
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public Lineup findById(long id) {
         return repository.findOne(id);
     }

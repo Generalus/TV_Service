@@ -14,13 +14,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Transactional
 public class TVPackageServiceImpl implements TVPackageService {
 
     @Autowired
     TVPackageRepository repository;
 
     @Override
-    @Transactional
     public TVPackage create(TVPackage tvPackage) {
         return repository.save(tvPackage);
     }
@@ -38,7 +38,7 @@ public class TVPackageServiceImpl implements TVPackageService {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public List<TVPackage> findAll() {
         List<TVPackage> list = new ArrayList<>();
         for(TVPackage tvPackage: repository.findAll())
@@ -47,13 +47,18 @@ public class TVPackageServiceImpl implements TVPackageService {
     }
 
     @Override
-    @Transactional
     public TVPackage update(TVPackage tvPackage) throws EntityNotFound {
-        return null;
+        TVPackage cur = repository.findOne(tvPackage.getOfferingID());
+        if (cur == null)
+            throw new EntityNotFound();
+        cur.setName(tvPackage.getName());
+        cur.setChannels(tvPackage.getChannels());
+        cur.setLineups(tvPackage.getLineups());
+        return cur;
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public TVPackage findById(long id) {
         return repository.findOne(id);
     }
