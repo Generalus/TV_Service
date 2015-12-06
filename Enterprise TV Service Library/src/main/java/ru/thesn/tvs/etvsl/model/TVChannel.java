@@ -17,11 +17,14 @@ public class TVChannel {
     @Column(name = "CONTENT_ID", nullable = false)
     private Long contentID;
 
-    @ManyToMany(mappedBy = "channels", fetch = FetchType.EAGER)
+    @ManyToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name="PACKAGE-CHANNEL",
+            joinColumns=@JoinColumn(name="PACKAGE"),
+            inverseJoinColumns=@JoinColumn(name="CHANNEL"))
     private Set<TVPackage> packages;
 
     @ManyToMany(mappedBy = "channels", fetch = FetchType.EAGER)
-    private Set<TVPackage> lineups;
+    private Set<Lineup> lineups;
 
     public Long getSourceID() {
         return sourceID;
@@ -55,11 +58,11 @@ public class TVChannel {
         this.packages = packages;
     }
 
-    public Set<TVPackage> getLineups() {
+    public Set<Lineup> getLineups() {
         return lineups;
     }
 
-    public void setLineups(Set<TVPackage> lineups) {
+    public void setLineups(Set<Lineup> lineups) {
         this.lineups = lineups;
     }
 }

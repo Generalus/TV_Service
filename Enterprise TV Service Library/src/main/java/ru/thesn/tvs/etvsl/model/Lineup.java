@@ -1,6 +1,7 @@
 package ru.thesn.tvs.etvsl.model;
 
 import javax.persistence.*;
+import java.nio.channels.Channel;
 import java.util.Set;
 
 @Entity
@@ -20,7 +21,7 @@ public class Lineup {
     @JoinTable(name="LINEUP-CHANNEL",
             joinColumns=@JoinColumn(name="LINEUP"),
             inverseJoinColumns=@JoinColumn(name="CHANNEL"))
-    private Set<Lineup> channels;
+    private Set<TVChannel> channels;
 
     public Long getAreaID() {
         return areaID;
@@ -46,11 +47,11 @@ public class Lineup {
         this.packages = packages;
     }
 
-    public Set<Lineup> getChannels() {
+    public Set<TVChannel> getChannels() {
         return channels;
     }
 
-    public void setChannels(Set<Lineup> channels) {
+    public void setChannels(Set<TVChannel> channels) {
         this.channels = channels;
     }
 }

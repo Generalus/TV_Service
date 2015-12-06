@@ -20,11 +20,8 @@ public class TVPackage {
             inverseJoinColumns=@JoinColumn(name="LINEUP"))
     private Set<Lineup> lineups;
 
-    @ManyToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(name="PACKAGE-CHANNEL",
-            joinColumns=@JoinColumn(name="PACKAGE"),
-            inverseJoinColumns=@JoinColumn(name="CHANNEL"))
-    private Set<Lineup> channels;
+    @ManyToMany(mappedBy = "packages", fetch = FetchType.EAGER)
+    private Set<TVChannel> channels;
 
     public Set<Lineup> getLineups() {
         return lineups;
@@ -34,11 +31,11 @@ public class TVPackage {
         this.lineups = lineups;
     }
 
-    public Set<Lineup> getChannels() {
+    public Set<TVChannel> getChannels() {
         return channels;
     }
 
-    public void setChannels(Set<Lineup> channels) {
+    public void setChannels(Set<TVChannel> channels) {
         this.channels = channels;
     }
 
