@@ -18,7 +18,7 @@ public class Lineup {
     private Set<TVPackage> packages;
 
     @ManyToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(name="LINEUP-CHANNEL",
+    @JoinTable(name="LINEUP_CHANNEL",
             joinColumns=@JoinColumn(name="LINEUP"),
             inverseJoinColumns=@JoinColumn(name="CHANNEL"))
     private Set<TVChannel> channels;

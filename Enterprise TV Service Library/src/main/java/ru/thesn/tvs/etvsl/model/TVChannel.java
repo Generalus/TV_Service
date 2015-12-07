@@ -18,7 +18,7 @@ public class TVChannel {
     private Long contentID;
 
     @ManyToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(name="PACKAGE-CHANNEL",
+    @JoinTable(name="PACKAGE_CHANNEL",
             joinColumns=@JoinColumn(name="PACKAGE"),
             inverseJoinColumns=@JoinColumn(name="CHANNEL"))
     private Set<TVPackage> packages;
