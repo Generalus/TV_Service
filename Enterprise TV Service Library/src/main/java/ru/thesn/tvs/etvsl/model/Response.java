@@ -1,11 +1,11 @@
 package ru.thesn.tvs.etvsl.model;
 
-import java.util.Set;
+import java.util.List;
 
 public class Response {
     private String code;
     private String errorMessage;
-    private Set<TVChannel> channels;
+    private List<TVChannel> channels;
 
 
     public Response(String code, String errorMessage) {
@@ -33,11 +33,11 @@ public class Response {
         this.code = code;
     }
 
-    public Set<TVChannel> getChannels() {
+    public List<TVChannel> getChannels() {
         return channels;
     }
 
-    public void setChannels(Set<TVChannel> channels) {
+    public void setChannels(List<TVChannel> channels) {
         this.channels = channels;
     }
 }
