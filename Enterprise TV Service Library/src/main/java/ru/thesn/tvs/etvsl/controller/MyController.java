@@ -30,10 +30,6 @@ public class MyController {
     @RequestMapping(value = "tvs", method = RequestMethod.GET)
     public @ResponseBody Response getResponseInJSON(@RequestParam String areaId, @RequestParam(value="packageIds[]") String[] packageIds){
         try {
-            if (areaId == null) return new Response("ERR", "В запросе необходим параметр areaId!");
-            if (packageIds == null)
-                return new Response("ERR", "В запросе необходим как минимум один элемент packageId!");
-
             Integer[] params = new Integer[packageIds.length + 1];
 
             try {
@@ -57,16 +53,16 @@ public class MyController {
             Set<TVChannel> set2 = new HashSet<>();
             for (int i = 1; i < params.length; i++) {
                 TVPackage tvPackage = tvPackageService.findById(params[i]);
-                if (tvPackage == null) return new Response("ERR", "Задан несуществующий TvPackage: " + params[i]);
+                if (tvPackage == null) return new Response("ERR", "Задан несуществующий TVPackage: " + params[i]);
                 set2.addAll(tvPackage.getChannels());
             }
 
             Set<TVChannel> channels = new HashSet<>();
             for (TVChannel channel : set2)
-                if (set1.contains(channel)) channels.add(channel);
+                if (set1.contains(channel) && "ACTIVE".equals(channel.getStatus())) channels.add(channel);
 
             if (channels.size() == 0)
-                return new Response("NOT_FOUND", "По данному запросу каналы не нашлись!");
+                return new Response("NOT_FOUND", "По данному запросу активных каналов не нашлось!");
 
             Response response = new Response("OK");
             response.setChannels(channels);

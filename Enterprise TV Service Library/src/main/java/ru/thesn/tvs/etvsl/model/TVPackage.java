@@ -14,6 +14,9 @@ public class TVPackage {
     @Column(name = "NAME")
     private String name;
 
+    @Column(name = "STATUS")
+    private String status;
+
     @ManyToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name="PACKAGE_LINEUP",
             joinColumns=@JoinColumn(name="PACKAGE"),
@@ -56,6 +59,14 @@ public class TVPackage {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     @Override

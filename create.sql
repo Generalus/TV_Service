@@ -1,6 +1,7 @@
 CREATE TABLE `tv_package` (
   `OFFERING_ID` bigint(20) NOT NULL,
   `NAME` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `STATUS` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`OFFERING_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -9,6 +10,7 @@ CREATE TABLE `channel` (
   `SOURCE_ID` bigint(20) NOT NULL,
   `CONTENT_ID` bigint(20) NOT NULL,
   `NAME` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `STATUS` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`SOURCE_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 

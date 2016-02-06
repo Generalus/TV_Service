@@ -20,6 +20,9 @@ public class TVChannel {
     @Column(name = "CONTENT_ID", nullable = false)
     private Long contentID;
 
+    @Column(name = "STATUS")
+    private String status;
+
     @JsonIgnore
     @ManyToMany(mappedBy = "channels", fetch = FetchType.EAGER)
     private Set<TVPackage> packages;
@@ -66,6 +69,14 @@ public class TVChannel {
 
     public void setLineups(Set<Lineup> lineups) {
         this.lineups = lineups;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     @Override
