@@ -1,4 +1,3 @@
-
 CREATE TABLE `tv_package` (
   `OFFERING_ID` bigint(20) NOT NULL,
   `NAME` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -36,8 +35,8 @@ CREATE TABLE `package_channel` (
   `CHANNEL` bigint(20) NOT NULL,
   PRIMARY KEY (`PACKAGE`,`CHANNEL`),
   KEY `FK87hfp3xagg8kr0b4bced9hrnl` (`CHANNEL`),
-  CONSTRAINT `FK2i330d4mod6iu6faek2w7xnfq` FOREIGN KEY (`PACKAGE`) REFERENCES `channel` (`SOURCE_ID`),
-  CONSTRAINT `FK87hfp3xagg8kr0b4bced9hrnl` FOREIGN KEY (`CHANNEL`) REFERENCES `tv_package` (`OFFERING_ID`)
+  CONSTRAINT `FK2i330d4mod6iu6faek2w7xnfq` FOREIGN KEY (`PACKAGE`) REFERENCES `tv_package` (`OFFERING_ID`),
+  CONSTRAINT `FK87hfp3xagg8kr0b4bced9hrnl` FOREIGN KEY (`CHANNEL`) REFERENCES `channel` (`SOURCE_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 CREATE TABLE `lineup_channel` (
