@@ -1,22 +1,43 @@
 package ru.thesn.tvs.etvsl.model;
 
+import java.util.Set;
+
 public class Response {
-    private String message;
-    private TVPackage tvPackage;
+    private String code;
+    private String errorMessage;
+    private Set<TVChannel> channels;
 
-    public String getMessage() {
-        return message;
+
+    public Response(String code, String errorMessage) {
+        this.code = code;
+        this.errorMessage = errorMessage;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public Response(String code) {
+        this.code = code;
     }
 
-    public TVPackage getTvPackage() {
-        return tvPackage;
+    public String getErrorMessage() {
+        return errorMessage;
     }
 
-    public void setTvPackage(TVPackage tvPackage) {
-        this.tvPackage = tvPackage;
+    public void setErrorMessage(String errorMessage) {
+        this.errorMessage = errorMessage;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public Set<TVChannel> getChannels() {
+        return channels;
+    }
+
+    public void setChannels(Set<TVChannel> channels) {
+        this.channels = channels;
     }
 }

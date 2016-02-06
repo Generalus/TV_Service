@@ -1,5 +1,10 @@
 package ru.thesn.tvs.etvsl.model;
 
+
+
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.nio.channels.Channel;
 import java.util.Set;
@@ -14,9 +19,12 @@ public class Lineup {
     @Column(name = "NAME")
     private String name;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "lineups", fetch = FetchType.EAGER)
     private Set<TVPackage> packages;
 
+
+    @JsonIgnore
     @ManyToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name="LINEUP_CHANNEL",
             joinColumns=@JoinColumn(name="LINEUP"),
@@ -53,5 +61,21 @@ public class Lineup {
 
     public void setChannels(Set<TVChannel> channels) {
         this.channels = channels;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Lineup lineup = (Lineup) o;
+
+        return areaID.equals(lineup.areaID);
+
+    }
+
+    @Override
+    public int hashCode() {
+        return areaID.hashCode();
     }
 }

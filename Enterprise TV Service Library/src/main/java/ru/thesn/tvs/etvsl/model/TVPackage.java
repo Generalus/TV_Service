@@ -20,7 +20,10 @@ public class TVPackage {
             inverseJoinColumns=@JoinColumn(name="LINEUP"))
     private Set<Lineup> lineups;
 
-    @ManyToMany(mappedBy = "packages", fetch = FetchType.EAGER)
+    @ManyToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name="PACKAGE_CHANNEL",
+            joinColumns=@JoinColumn(name="PACKAGE"),
+            inverseJoinColumns=@JoinColumn(name="CHANNEL"))
     private Set<TVChannel> channels;
 
     public Set<Lineup> getLineups() {
@@ -53,5 +56,21 @@ public class TVPackage {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        TVPackage tvPackage = (TVPackage) o;
+
+        return offeringID.equals(tvPackage.offeringID);
+
+    }
+
+    @Override
+    public int hashCode() {
+        return offeringID.hashCode();
     }
 }
