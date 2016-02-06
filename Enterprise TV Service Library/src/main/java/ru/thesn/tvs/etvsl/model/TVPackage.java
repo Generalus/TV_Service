@@ -1,5 +1,7 @@
 package ru.thesn.tvs.etvsl.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -14,6 +16,7 @@ public class TVPackage {
     @Column(name = "NAME")
     private String name;
 
+    @JsonIgnore
     @Column(name = "STATUS")
     private String status;
 

@@ -20,6 +20,7 @@ public class TVChannel {
     @Column(name = "CONTENT_ID", nullable = false)
     private Long contentID;
 
+    @JsonIgnore
     @Column(name = "STATUS")
     private String status;
 
