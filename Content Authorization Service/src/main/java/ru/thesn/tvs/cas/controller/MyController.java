@@ -44,7 +44,7 @@ public class MyController {
 
 
     public CIMResponse getCIMResponse(String login, String passwordHash) throws Exception{
-        String url = String.format("http://localhost:8080/rest/cim?login=%s&passwordHash=%s", login, passwordHash);
+        String url = String.format("http://localhost:8050/rest/cim?login=%s&passwordHash=%s", login, passwordHash);
 
         String jsonString = connectAndReadJSONData(url);
         StringReader reader = new StringReader(jsonString);
@@ -55,7 +55,7 @@ public class MyController {
 
     public TVSResponse getTVSResponse(String areaID, String[] packageIDs) throws Exception{
         StringBuilder url = new StringBuilder();
-        url.append("http://localhost:8080/rest/tvs?areaId=").append(areaID);
+        url.append("http://localhost:8055/rest/tvsl?areaId=").append(areaID);
 
         for(String pID: packageIDs)
             url.append("&packageIds[]=").append(pID);
@@ -78,7 +78,8 @@ public class MyController {
         while ((line = br.readLine()) != null)
             sb.append(line);
         br.close();
-        System.out.println("Получены данные: \n" + sb.toString());
-        return sb.toString();
+        String result = new String(sb.toString().getBytes("Cp1251"), "UTF-8");
+        System.out.println("Получены данные: \n" + result);
+        return result;
     }
 }
