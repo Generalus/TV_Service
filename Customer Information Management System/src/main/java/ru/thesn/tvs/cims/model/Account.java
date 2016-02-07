@@ -73,4 +73,20 @@ public class Account {
     public void setProducts(Set<Product> products) {
         this.products = products;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Account account = (Account) o;
+
+        return login.equals(account.login);
+
+    }
+
+    @Override
+    public int hashCode() {
+        return login.hashCode();
+    }
 }
