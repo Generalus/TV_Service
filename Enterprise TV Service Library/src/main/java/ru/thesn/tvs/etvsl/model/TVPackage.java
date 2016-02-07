@@ -80,7 +80,6 @@ public class TVPackage {
         TVPackage tvPackage = (TVPackage) o;
 
         return offeringID.equals(tvPackage.offeringID);
-
     }
 
     @Override

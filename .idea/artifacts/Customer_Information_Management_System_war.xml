@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="Customer Information Management System:war">
+    <output-path>$PROJECT_DIR$/Customer Information Management System/target</output-path>
+    <root id="archive" name="CIMS-1.0-SNAPSHOT.war">
+      <element id="artifact" artifact-name="Customer Information Management System:war exploded" />
+    </root>
+  </artifact>
+</component>

@@ -25,7 +25,7 @@ public class MyController {
     @Autowired
     TVPackageService tvPackageService;
 
-    @RequestMapping(value = "tvs", method = RequestMethod.GET)
+    @RequestMapping(value = "tvsl", method = RequestMethod.GET)
     public @ResponseBody Response getResponseInJSON(@RequestParam String areaId, @RequestParam(value="packageIds[]") String[] packageIds){
         try {
             Response response = new Response("OK");
@@ -44,7 +44,7 @@ public class MyController {
         }
     }
 
-    public List<TVChannel> findChannels(Integer[] params) throws EntityNotFound, IncorrectDataException {
+    public List<TVChannel> findChannels(Integer[] params) throws Exception {
         Lineup lineup = lineupService.findById(params[0]);
         if (lineup == null) throw new EntityNotFound("Задан несуществующий Lineup: " + params[0]);
         Set<TVChannel> set1 = lineup.getChannels();
@@ -77,7 +77,7 @@ public class MyController {
     }
 
 
-    public Integer[] getParamsArray(String s, String[] arr) throws IncorrectDataException{
+    public Integer[] getParamsArray(String s, String[] arr) throws Exception{
         Integer[] result = new Integer[arr.length + 1];
 
         try {

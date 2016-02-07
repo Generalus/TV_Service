@@ -54,6 +54,7 @@ public class TVPackageServiceImpl implements TVPackageService {
         cur.setName(tvPackage.getName());
         cur.setChannels(tvPackage.getChannels());
         cur.setLineups(tvPackage.getLineups());
+        cur.setStatus(tvPackage.getStatus());
         return cur;
     }
 

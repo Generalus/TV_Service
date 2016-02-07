@@ -71,7 +71,6 @@ public class Lineup {
         Lineup lineup = (Lineup) o;
 
         return areaID.equals(lineup.areaID);
-
     }
 
     @Override

@@ -58,6 +58,7 @@ public class TVChannelServiceImpl implements TVChannelService {
         cur.setLineups(channel.getLineups());
         cur.setName(channel.getName());
         cur.setPackages(channel.getPackages());
+        cur.setStatus(channel.getStatus());
         return cur;
     }
 

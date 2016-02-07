@@ -1,7 +1,5 @@
 package ru.thesn.tvs.etvsl.model;
 
-
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
@@ -88,7 +86,6 @@ public class TVChannel {
         TVChannel channel = (TVChannel) o;
 
         return sourceID.equals(channel.sourceID);
-
     }
 
     @Override
