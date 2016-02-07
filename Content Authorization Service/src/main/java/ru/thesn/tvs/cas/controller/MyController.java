@@ -6,10 +6,8 @@ import ru.thesn.tvs.cas.model.CIMResponse;
 import ru.thesn.tvs.cas.model.MainResponse;
 import ru.thesn.tvs.cas.model.TVSResponse;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.StringReader;
+import java.io.*;
+import java.net.ConnectException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -35,6 +33,9 @@ public class MyController {
 
             return response;
         }
+        catch (FileNotFoundException | ConnectException e){
+            return new MainResponse("ERR", "Вспомогательный сервер не отвечает!");
+        }
         catch (Exception e){
             e.printStackTrace();
             return new MainResponse("CRITICAL_ERROR", "Критическая ошибка системы: " + e.toString());
@@ -43,7 +44,7 @@ public class MyController {
 
 
     public CIMResponse getCIMResponse(String login, String passwordHash) throws Exception{
-        String url = String.format("http://localhost:8084/rest/cim?login=%s&passwordHash=%s", login, passwordHash);
+        String url = String.format("http://localhost:8080/rest/cim?login=%s&passwordHash=%s", login, passwordHash);
 
         String jsonString = connectAndReadJSONData(url);
         StringReader reader = new StringReader(jsonString);
@@ -68,6 +69,7 @@ public class MyController {
 
 
     public String connectAndReadJSONData(String urlStr) throws IOException {
+        System.out.println("Подключаюсь к " + urlStr);
         URL url = new URL(urlStr);
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream()));
@@ -76,6 +78,7 @@ public class MyController {
         while ((line = br.readLine()) != null)
             sb.append(line);
         br.close();
+        System.out.println("Получены данные: \n" + sb.toString());
         return sb.toString();
     }
 }
