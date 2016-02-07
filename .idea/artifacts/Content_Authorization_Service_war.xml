@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="Content Authorization Service:war">
+    <output-path>$PROJECT_DIR$/Content Authorization Service/target</output-path>
+    <root id="archive" name="CAS-1.0-SNAPSHOT.war">
+      <element id="artifact" artifact-name="Content Authorization Service:war exploded" />
+    </root>
+  </artifact>
+</component>
