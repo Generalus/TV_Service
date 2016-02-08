@@ -1,0 +1,10 @@
+http://localhost:8080/rest/cas?login=admin&passwordHash=dg12a
+{"code":"OK","errorMessage":null,"channels":[{"sourceID":10011,"name":"Animal Planet","contentID":9001},{"sourceID":10012,"name":"Animal Planet HD","contentID":9001},{"sourceID":10031,"name":"HBO HD","contentID":9003},{"sourceID":10041,"name":"HBO East HD","contentID":9004}]}
+http://localhost:8080/rest/cas?login=ololosha&passwordHash=Gdg4f
+{"code":"OK","errorMessage":null,"channels":[{"sourceID":10031,"name":"HBO HD","contentID":9003},{"sourceID":10041,"name":"HBO East HD","contentID":9004}]}
+http://localhost:8080/rest/cas?login=ghost&passwordHash=dfgdfg
+{"code":"WARN","errorMessage":"Уведомление: Заданный аккаунт не существует!","channels":null}
+http://localhost:8080/rest/cas?login=admin&passwordHash=wrong_hash
+{"code":"ERR","errorMessage":"Ошибка доступа: Пароль неверен!","channels":null}
+http://localhost:8080/rest/cas?login=volk2005&passwordHash=gc54d
+{"code":"OK","errorMessage":null,"channels":[{"sourceID":10011,"name":"Animal Planet","contentID":9001}]}
