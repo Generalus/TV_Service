@@ -1,4 +1,4 @@
-package ru.thesn.tvs.etvsl;
+package ru.thesn.tvs.etvsl.controller;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -6,23 +6,20 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import ru.thesn.tvs.etvsl.controller.MyController;
+import ru.thesn.tvs.etvsl.exception.IncorrectDataException;
 import ru.thesn.tvs.etvsl.model.Lineup;
 import ru.thesn.tvs.etvsl.model.TVChannel;
 import ru.thesn.tvs.etvsl.model.TVPackage;
 import ru.thesn.tvs.etvsl.service.LineupService;
 import ru.thesn.tvs.etvsl.service.TVPackageService;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class FindChannelsTest {
+public class MyControllerTest {
     @Mock
     private LineupService lineupService;
 
@@ -83,16 +80,43 @@ public class FindChannelsTest {
         ans.add(ch[4]);
     }
 
+
+    @Test(expected = IncorrectDataException.class)
+    public void testGetParamsArray_shouldCheckThatAreaIdIsInteger() throws Exception{
+        String[] arr = {"12345", "23456", "3456"};
+        controller.getParamsArray("2G", arr);
+    }
+
+    @Test(expected = IncorrectDataException.class)
+    public void testGetParamsArray_shouldCheckThatPackageIdsAreIntegers() throws Exception{
+        String[] arr = {"12345", "DFGHJ", "3456"};
+        controller.getParamsArray("1", arr);
+    }
+
+    @Test(expected = IncorrectDataException.class)
+    public void testGetParamsArray_shouldCheckThatPackageIdsAreIntegers_2() throws Exception{
+        String[] arr = {"0.3"};
+        controller.getParamsArray("11", arr);
+    }
+
     @Test
-    public void test1() throws Exception{
+    public void testGetParamsArray_shouldCreateParamsArrayCorrectly() throws Exception{
+        Integer[] ans = {2, 823, 736};
+        String[] arr = {"823", "736"};
+        assertEquals(Arrays.deepToString(ans), Arrays.deepToString(controller.getParamsArray("2", arr)));
+    }
+
+    @Test
+    public void testFindChannels_shouldCheckChannelsListSize() throws Exception{
         List<TVChannel> list = controller.findChannels(params);
         assertEquals(3, list.size());
     }
 
     @Test
-    public void test2() throws Exception{
+    public void testFindChannels_shouldCheckChannelsList() throws Exception{
         List<TVChannel> list = controller.findChannels(params);
         for(int i = 0; i < list.size(); i++)
             assertEquals(list.get(i).getSourceID(), ans.get(i).getSourceID());
     }
+
 }

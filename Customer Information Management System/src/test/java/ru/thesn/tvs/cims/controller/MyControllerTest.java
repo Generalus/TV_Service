@@ -1,4 +1,5 @@
-package ru.thesn.tvs.cims;
+package ru.thesn.tvs.cims.controller;
+
 
 import org.junit.Before;
 import org.junit.Test;
@@ -6,7 +7,6 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import ru.thesn.tvs.cims.controller.MyController;
 import ru.thesn.tvs.cims.exception.EntityNotFound;
 import ru.thesn.tvs.cims.exception.IllegalAccessException;
 import ru.thesn.tvs.cims.model.Account;
@@ -16,12 +16,11 @@ import ru.thesn.tvs.cims.service.AccountService;
 import java.util.HashSet;
 import java.util.Set;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class CheckAccountTest {
-
+public class MyControllerTest {
     @Mock
     private AccountService accountService;
 
@@ -62,18 +61,17 @@ public class CheckAccountTest {
     }
 
     @Test(expected = IllegalAccessException.class)
-    public void test1() throws Exception {
+    public void testCheckAccount_shouldThrowIllegalAccessExceptionIfPasswordIsNotCorrect() throws Exception {
         controller.checkAccount("admin", "wrong_hash");
     }
 
     @Test(expected = EntityNotFound.class)
-    public void test2() throws Exception {
+    public void testCheckAccount_shouldThrowEntityNotFoundExceptionIfLoginIsNotReal() throws Exception {
         controller.checkAccount("ghost", "hash");
     }
 
     @Test
-    public void test3() throws Exception {
+    public void testCheckAccount_shouldFindAccountWithCorrectLoginAndPassword() throws Exception {
         assertEquals(account, controller.checkAccount("admin", "dg12a"));
     }
-
 }
