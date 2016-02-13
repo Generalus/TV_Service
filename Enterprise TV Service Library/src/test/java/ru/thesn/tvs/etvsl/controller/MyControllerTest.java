@@ -82,19 +82,19 @@ public class MyControllerTest {
 
 
     @Test(expected = IncorrectDataException.class)
-    public void testGetParamsArray_shouldCheckThatAreaIdIsInteger() throws Exception{
+    public void testGetParamsArray_shouldGenerateExceptionIfAreaIdIsString() throws Exception{
         String[] arr = {"12345", "23456", "3456"};
         controller.getParamsArray("2G", arr);
     }
 
     @Test(expected = IncorrectDataException.class)
-    public void testGetParamsArray_shouldCheckThatPackageIdsAreIntegers() throws Exception{
+    public void testGetParamsArray_shouldGenerateExceptionIfInputPackageIdIsString() throws Exception{
         String[] arr = {"12345", "DFGHJ", "3456"};
         controller.getParamsArray("1", arr);
     }
 
     @Test(expected = IncorrectDataException.class)
-    public void testGetParamsArray_shouldCheckThatPackageIdsAreIntegers_2() throws Exception{
+    public void testGetParamsArray_shouldGenerateExceptionIfInputPackageIdIsDoubleNumber() throws Exception{
         String[] arr = {"0.3"};
         controller.getParamsArray("11", arr);
     }
