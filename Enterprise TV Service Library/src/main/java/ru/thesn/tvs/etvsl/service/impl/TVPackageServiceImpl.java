@@ -3,13 +3,11 @@ package ru.thesn.tvs.etvsl.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.thesn.tvs.etvsl.exception.EntityNotFound;
-import ru.thesn.tvs.etvsl.model.TVChannel;
+import ru.thesn.tvs.etvsl.exception.EntityNotFoundException;
 import ru.thesn.tvs.etvsl.model.TVPackage;
 import ru.thesn.tvs.etvsl.repository.TVPackageRepository;
 import ru.thesn.tvs.etvsl.service.TVPackageService;
 
-import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,12 +24,12 @@ public class TVPackageServiceImpl implements TVPackageService {
     }
 
     @Override
-    @Transactional(rollbackFor = EntityNotFound.class)
-    public TVPackage delete(long id) throws EntityNotFound {
+    @Transactional(rollbackFor = EntityNotFoundException.class)
+    public TVPackage delete(long id) throws EntityNotFoundException {
         TVPackage deletedTVPackage = repository.findOne(id);
 
         if (deletedTVPackage == null)
-            throw new EntityNotFound();
+            throw new EntityNotFoundException();
 
         repository.delete(deletedTVPackage);
         return deletedTVPackage;
@@ -47,10 +45,10 @@ public class TVPackageServiceImpl implements TVPackageService {
     }
 
     @Override
-    public TVPackage update(TVPackage tvPackage) throws EntityNotFound {
+    public TVPackage update(TVPackage tvPackage) throws EntityNotFoundException {
         TVPackage cur = repository.findOne(tvPackage.getOfferingID());
         if (cur == null)
-            throw new EntityNotFound();
+            throw new EntityNotFoundException();
         cur.setName(tvPackage.getName());
         cur.setChannels(tvPackage.getChannels());
         cur.setLineups(tvPackage.getLineups());

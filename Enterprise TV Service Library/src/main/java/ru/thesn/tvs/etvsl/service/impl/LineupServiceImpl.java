@@ -3,15 +3,12 @@ package ru.thesn.tvs.etvsl.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.thesn.tvs.etvsl.exception.EntityNotFound;
+import ru.thesn.tvs.etvsl.exception.EntityNotFoundException;
 import ru.thesn.tvs.etvsl.model.Lineup;
-import ru.thesn.tvs.etvsl.model.TVChannel;
 import ru.thesn.tvs.etvsl.repository.LineupRepository;
 import ru.thesn.tvs.etvsl.service.LineupService;
 
-import javax.annotation.Resource;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -27,12 +24,12 @@ public class LineupServiceImpl implements LineupService {
     }
 
     @Override
-    @Transactional(rollbackFor = EntityNotFound.class)
-    public Lineup delete(long id) throws EntityNotFound {
+    @Transactional(rollbackFor = EntityNotFoundException.class)
+    public Lineup delete(long id) throws EntityNotFoundException {
         Lineup deletedLineup = repository.findOne(id);
 
         if (deletedLineup == null)
-            throw new EntityNotFound();
+            throw new EntityNotFoundException();
 
         repository.delete(deletedLineup);
         return deletedLineup;
@@ -48,10 +45,10 @@ public class LineupServiceImpl implements LineupService {
     }
 
     @Override
-    public Lineup update(Lineup lineup) throws EntityNotFound {
+    public Lineup update(Lineup lineup) throws EntityNotFoundException {
         Lineup cur = repository.findOne(lineup.getAreaID());
         if (cur == null)
-            throw new EntityNotFound();
+            throw new EntityNotFoundException();
         cur.setName(lineup.getName());
         cur.setPackages(lineup.getPackages());
         cur.setChannels(lineup.getChannels());

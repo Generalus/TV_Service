@@ -3,14 +3,13 @@ package ru.thesn.tvs.etvsl.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import ru.thesn.tvs.etvsl.exception.EntityNotFound;
+import ru.thesn.tvs.etvsl.exception.EntityNotFoundException;
 import ru.thesn.tvs.etvsl.exception.IncorrectDataException;
 import ru.thesn.tvs.etvsl.model.Lineup;
 import ru.thesn.tvs.etvsl.model.Response;
 import ru.thesn.tvs.etvsl.model.TVChannel;
 import ru.thesn.tvs.etvsl.model.TVPackage;
 import ru.thesn.tvs.etvsl.service.LineupService;
-import ru.thesn.tvs.etvsl.service.TVChannelService;
 import ru.thesn.tvs.etvsl.service.TVPackageService;
 
 import java.util.*;
@@ -32,7 +31,7 @@ public class MyController {
             response.setChannels(findChannels(getParamsArray(areaId, packageIds)));
             return response;
         }
-        catch (EntityNotFound e){
+        catch (EntityNotFoundException e){
             return new Response("WARN", "Уведомление: " + e.getMessage());
         }
         catch (IncorrectDataException e){
@@ -44,15 +43,15 @@ public class MyController {
         }
     }
 
-    public List<TVChannel> findChannels(Integer[] params) throws Exception {
+    public List<TVChannel> findChannels(Integer[] params) throws EntityNotFoundException {
         Lineup lineup = lineupService.findById(params[0]);
-        if (lineup == null) throw new EntityNotFound("Задан несуществующий Lineup: " + params[0]);
+        if (lineup == null) throw new EntityNotFoundException("Задан несуществующий Lineup: " + params[0]);
         Set<TVChannel> set1 = lineup.getChannels();
 
         Set<TVChannel> set2 = new HashSet<>();
         for (int i = 1; i < params.length; i++) {
             TVPackage tvPackage = tvPackageService.findById(params[i]);
-            if (tvPackage == null || !"ACTIVE".equals(tvPackage.getStatus())) throw new EntityNotFound("Задан несуществующий/неактивный TVPackage: " + params[i]);
+            if (tvPackage == null || !"ACTIVE".equals(tvPackage.getStatus())) throw new EntityNotFoundException("Задан несуществующий/неактивный TVPackage: " + params[i]);
             set2.addAll(tvPackage.getChannels());
         }
 
@@ -61,7 +60,7 @@ public class MyController {
             if (set1.contains(channel) && "ACTIVE".equals(channel.getStatus())) channels.add(channel);
 
         if (channels.size() == 0)
-            throw new EntityNotFound("По данному запросу активных каналов не нашлось!");
+            throw new EntityNotFoundException("По данному запросу активных каналов не нашлось!");
         // в данном случае, отсутствие каналов - скорее недочет системы, чем обычная ситуация
 
         List<TVChannel> result = new ArrayList<>();
@@ -77,7 +76,7 @@ public class MyController {
     }
 
 
-    public Integer[] getParamsArray(String s, String[] arr) throws Exception{
+    public Integer[] getParamsArray(String s, String[] arr) throws IncorrectDataException{
         Integer[] result = new Integer[arr.length + 1];
 
         try {
