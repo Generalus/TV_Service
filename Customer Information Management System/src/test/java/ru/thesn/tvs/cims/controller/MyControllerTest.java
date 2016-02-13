@@ -7,7 +7,7 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import ru.thesn.tvs.cims.exception.EntityNotFound;
+import ru.thesn.tvs.cims.exception.EntityNotFoundException;
 import ru.thesn.tvs.cims.exception.IllegalAccessException;
 import ru.thesn.tvs.cims.model.Account;
 import ru.thesn.tvs.cims.model.Product;
@@ -65,7 +65,7 @@ public class MyControllerTest {
         controller.checkAccount("admin", "wrong_hash");
     }
 
-    @Test(expected = EntityNotFound.class)
+    @Test(expected = EntityNotFoundException.class)
     public void testCheckAccount_shouldThrowEntityNotFoundExceptionIfLoginIsNotReal() throws Exception {
         controller.checkAccount("ghost", "hash");
     }

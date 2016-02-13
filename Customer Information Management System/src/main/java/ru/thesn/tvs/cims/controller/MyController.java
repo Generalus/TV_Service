@@ -2,7 +2,7 @@ package ru.thesn.tvs.cims.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import ru.thesn.tvs.cims.exception.EntityNotFound;
+import ru.thesn.tvs.cims.exception.EntityNotFoundException;
 import ru.thesn.tvs.cims.exception.IllegalAccessException;
 import ru.thesn.tvs.cims.model.Account;
 import ru.thesn.tvs.cims.model.Product;
@@ -39,7 +39,7 @@ public class MyController {
             response.setAreaID(account.getAreaID());
             return response;
         }
-        catch (EntityNotFound e){
+        catch (EntityNotFoundException e){
             return new Response("WARN", "Уведомление: " + e.getMessage());
         }
         catch (IllegalAccessException e){
@@ -54,7 +54,7 @@ public class MyController {
     public Account checkAccount(String login, String passHash) throws Exception{
         Account account = accountService.findById(login);
         if (account == null)
-            throw new EntityNotFound("Заданный аккаунт не существует!");
+            throw new EntityNotFoundException("Заданный аккаунт не существует!");
         if (!passHash.equals(account.getPasswordHash()))
             throw new IllegalAccessException("Пароль неверен!");
         return account;

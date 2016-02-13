@@ -3,7 +3,7 @@ package ru.thesn.tvs.cims.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.thesn.tvs.cims.exception.EntityNotFound;
+import ru.thesn.tvs.cims.exception.EntityNotFoundException;
 import ru.thesn.tvs.cims.model.Account;
 import ru.thesn.tvs.cims.repository.AccountRepository;
 import ru.thesn.tvs.cims.service.AccountService;
@@ -24,12 +24,12 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    @Transactional(rollbackFor = EntityNotFound.class)
-    public Account delete(String id) throws EntityNotFound {
+    @Transactional(rollbackFor = EntityNotFoundException.class)
+    public Account delete(String id) throws EntityNotFoundException {
         Account deletedAccount = repository.findOne(id);
 
         if (deletedAccount == null)
-            throw new EntityNotFound();
+            throw new EntityNotFoundException();
 
         repository.delete(deletedAccount);
         return deletedAccount;
@@ -45,10 +45,10 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public Account update(Account account) throws EntityNotFound {
+    public Account update(Account account) throws EntityNotFoundException {
         Account cur = repository.findOne(account.getLogin());
         if (cur == null)
-            throw new EntityNotFound();
+            throw new EntityNotFoundException();
         cur.setFirstName(account.getFirstName());
         cur.setLastName(account.getLastName());
         cur.setAreaID(account.getAreaID());

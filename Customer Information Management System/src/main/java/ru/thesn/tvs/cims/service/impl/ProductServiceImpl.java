@@ -3,7 +3,7 @@ package ru.thesn.tvs.cims.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.thesn.tvs.cims.exception.EntityNotFound;
+import ru.thesn.tvs.cims.exception.EntityNotFoundException;
 import ru.thesn.tvs.cims.model.Product;
 import ru.thesn.tvs.cims.repository.ProductRepository;
 import ru.thesn.tvs.cims.service.ProductService;
@@ -25,12 +25,12 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    @Transactional(rollbackFor = EntityNotFound.class)
-    public Product delete(long id) throws EntityNotFound {
+    @Transactional(rollbackFor = EntityNotFoundException.class)
+    public Product delete(long id) throws EntityNotFoundException {
         Product deletedProduct = repository.findOne(id);
 
         if (deletedProduct == null)
-            throw new EntityNotFound();
+            throw new EntityNotFoundException();
 
         repository.delete(deletedProduct);
         return deletedProduct;
@@ -46,10 +46,10 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product update(Product product) throws EntityNotFound {
+    public Product update(Product product) throws EntityNotFoundException {
         Product cur = repository.findOne(product.getOfferingID());
         if (cur == null)
-            throw new EntityNotFound();
+            throw new EntityNotFoundException();
         cur.setAccount(product.getAccount());
 
         return cur;
