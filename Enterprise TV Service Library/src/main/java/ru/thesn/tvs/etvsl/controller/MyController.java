@@ -3,6 +3,8 @@ package ru.thesn.tvs.etvsl.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import ru.thesn.tvs.etvsl.enumeration.ResponseCode;
+import ru.thesn.tvs.etvsl.enumeration.StatusCode;
 import ru.thesn.tvs.etvsl.exception.EntityNotFoundException;
 import ru.thesn.tvs.etvsl.exception.IncorrectDataException;
 import ru.thesn.tvs.etvsl.model.Lineup;
@@ -27,19 +29,19 @@ public class MyController {
     @RequestMapping(value = "tvsl", method = RequestMethod.GET)
     public @ResponseBody Response getResponseInJSON(@RequestParam String areaId, @RequestParam(value="packageIds[]") String[] packageIds){
         try {
-            Response response = new Response("OK");
+            Response response = new Response(ResponseCode.OK.name());
             response.setChannels(findChannels(getParamsArray(areaId, packageIds)));
             return response;
         }
         catch (EntityNotFoundException e){
-            return new Response("WARN", "Уведомление: " + e.getMessage());
+            return new Response(ResponseCode.WARN.name(), "Уведомление: " + e.getMessage());
         }
         catch (IncorrectDataException e){
-            return new Response("ERR", "Ошибка системы: " + e.getMessage());
+            return new Response(ResponseCode.ERR.name(), "Ошибка системы: " + e.getMessage());
         }
         catch (Exception e){
             e.printStackTrace();
-            return new Response("CRITICAL_ERROR", "Критическая ошибка системы: " + e.toString());
+            return new Response(ResponseCode.CRITICAL_ERROR.name(), "Критическая ошибка системы: " + e.toString());
         }
     }
 
@@ -51,13 +53,13 @@ public class MyController {
         Set<TVChannel> set2 = new HashSet<>();
         for (int i = 1; i < params.length; i++) {
             TVPackage tvPackage = tvPackageService.findById(params[i]);
-            if (tvPackage == null || !"ACTIVE".equals(tvPackage.getStatus())) throw new EntityNotFoundException("Задан несуществующий/неактивный TVPackage: " + params[i]);
+            if (tvPackage == null || !StatusCode.ACTIVE.name().equals(tvPackage.getStatus())) throw new EntityNotFoundException("Задан несуществующий/неактивный TVPackage: " + params[i]);
             set2.addAll(tvPackage.getChannels());
         }
 
         Set<TVChannel> channels = new HashSet<>();
         for (TVChannel channel : set2)
-            if (set1.contains(channel) && "ACTIVE".equals(channel.getStatus())) channels.add(channel);
+            if (set1.contains(channel) && StatusCode.ACTIVE.name().equals(channel.getStatus())) channels.add(channel);
 
         if (channels.size() == 0)
             throw new EntityNotFoundException("По данному запросу активных каналов не нашлось!");

@@ -1,5 +1,7 @@
 package ru.thesn.tvs.cas.test;
 
+import ru.thesn.tvs.cas.enumeration.ResponseCode;
+
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;

@@ -2,6 +2,7 @@ package ru.thesn.tvs.cas.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.web.bind.annotation.*;
+import ru.thesn.tvs.cas.enumeration.ResponseCode;
 import ru.thesn.tvs.cas.model.CIMResponse;
 import ru.thesn.tvs.cas.model.MainResponse;
 import ru.thesn.tvs.cas.model.TVSResponse;
@@ -19,14 +20,14 @@ public class MyController {
     @RequestMapping(value = "cas", method = RequestMethod.GET)
     public @ResponseBody MainResponse getResponseInJSON(@RequestParam String login, @RequestParam String passwordHash){
         try {
-            MainResponse response = new MainResponse("OK");
+            MainResponse response = new MainResponse(ResponseCode.OK.name());
 
             CIMResponse cimResponse = getCIMResponse(login, passwordHash);
-            if (!(cimResponse.getCode().equals("OK")))
+            if (!(cimResponse.getCode().equals(ResponseCode.OK.name())))
                 return new MainResponse(cimResponse.getCode(), cimResponse.getErrorMessage());
 
             TVSResponse tvsResponse = getTVSResponse(cimResponse.getAreaID().toString(), cimResponse.getProductsStringArray());
-            if (!(tvsResponse.getCode().equals("OK")))
+            if (!(tvsResponse.getCode().equals(ResponseCode.OK.name())))
                 return new MainResponse(tvsResponse.getCode(), tvsResponse.getErrorMessage());
 
             response.setChannels(tvsResponse.getChannels());
@@ -34,11 +35,11 @@ public class MyController {
             return response;
         }
         catch (FileNotFoundException | ConnectException e){
-            return new MainResponse("ERR", "Вспомогательный сервер не отвечает!");
+            return new MainResponse(ResponseCode.ERR.name(), "Вспомогательный сервер не отвечает!");
         }
         catch (Exception e){
             e.printStackTrace();
-            return new MainResponse("CRITICAL_ERROR", "Критическая ошибка системы: " + e.toString());
+            return new MainResponse(ResponseCode.CRITICAL_ERROR.name(), "Критическая ошибка системы: " + e.toString());
         }
     }
 

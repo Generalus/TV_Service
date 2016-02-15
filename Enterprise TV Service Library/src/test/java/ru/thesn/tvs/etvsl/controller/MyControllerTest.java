@@ -6,6 +6,8 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import ru.thesn.tvs.etvsl.enumeration.ResponseCode;
+import ru.thesn.tvs.etvsl.enumeration.StatusCode;
 import ru.thesn.tvs.etvsl.exception.EntityNotFoundException;
 import ru.thesn.tvs.etvsl.exception.IncorrectDataException;
 import ru.thesn.tvs.etvsl.model.Lineup;
@@ -50,7 +52,7 @@ public class MyControllerTest {
         for(int i = 0; i < ch.length; i++) {
             ch[i] = new TVChannel();
             ch[i].setSourceID(10011L + i*10);
-            ch[i].setStatus("ACTIVE");
+            ch[i].setStatus(StatusCode.ACTIVE.name());
         }
 
         Lineup lineup = new Lineup();
@@ -65,7 +67,7 @@ public class MyControllerTest {
 
         TVPackage tvp1 = new TVPackage();
         tvp1.setOfferingID(1001L);
-        tvp1.setStatus("ACTIVE");
+        tvp1.setStatus(StatusCode.ACTIVE.name());
         set = new HashSet<>();
         set.add(ch[0]);
         set.add(ch[1]);
@@ -73,7 +75,7 @@ public class MyControllerTest {
 
         TVPackage tvp2 = new TVPackage();
         tvp2.setOfferingID(1003L);
-        tvp2.setStatus("ACTIVE");
+        tvp2.setStatus(StatusCode.ACTIVE.name());
         set = new HashSet<>();
         set.add(ch[0]);
         set.add(ch[2]);
@@ -105,7 +107,7 @@ public class MyControllerTest {
 
         TVPackage tvp = new TVPackage();
         tvp.setOfferingID(1007L);
-        tvp.setStatus("ACTIVE");
+        tvp.setStatus(StatusCode.ACTIVE.name());
         set2 = new HashSet<>();
         set2.add(ch[0]);
         set2.add(ch[1]);
@@ -125,7 +127,7 @@ public class MyControllerTest {
 
         TVPackage tvp4 = new TVPackage();
         tvp4.setOfferingID(1017L);
-        tvp4.setStatus("NOT_ACTIVE");
+        tvp4.setStatus(StatusCode.NOT_ACTIVE.name());
         set3 = new HashSet<>();
         set3.add(ch[0]);
         set3.add(ch[1]);
@@ -207,7 +209,7 @@ public class MyControllerTest {
         for(int i = 1; i < params.length; i++) {
             verify(tvPackageService, times(1)).findById(params[i]);
         }
-        assertArrayEquals("OK".getBytes(), response.getCode().getBytes());
+        assertArrayEquals(ResponseCode.OK.name().getBytes(), response.getCode().getBytes());
         for(int i = 0; i < response.getChannels().size(); i++) {
             assertEquals(response.getChannels().get(i).getSourceID(), ans.get(i).getSourceID());
         }
@@ -218,34 +220,34 @@ public class MyControllerTest {
         String[] input = {"1006", "1008"};
         Response response = controller.getResponseInJSON("2", input);
         verify(lineupService, times(1)).findById(params2[0]);
-        assertArrayEquals("WARN".getBytes(), response.getCode().getBytes());
+        assertArrayEquals(ResponseCode.WARN.name().getBytes(), response.getCode().getBytes());
     }
 
     @Test
     public void testGetResponseInJSON_shouldReturnErrResponseWhenAreaIDIsNotNumber(){
         String[] input = {"1006", "1008"};
         Response response = controller.getResponseInJSON("not_integer", input);
-        assertArrayEquals("ERR".getBytes(), response.getCode().getBytes());
+        assertArrayEquals(ResponseCode.ERR.name().getBytes(), response.getCode().getBytes());
     }
 
     @Test
     public void testGetResponseInJSON_shouldReturnErrResponseWhenPackageIdsAreNotNumbers(){
         String[] input = {"not_integer", "1234"};
         Response response = controller.getResponseInJSON("1", input);
-        assertArrayEquals("ERR".getBytes(), response.getCode().getBytes());
+        assertArrayEquals(ResponseCode.ERR.name().getBytes(), response.getCode().getBytes());
     }
 
     @Test
     public void testGetResponseInJSON_shouldReturnWarnResponseWhenTVPackageIsNULL(){
         String[] input = {"1007"};
         Response response = controller.getResponseInJSON("3", input);
-        assertArrayEquals("WARN".getBytes(), response.getCode().getBytes());
+        assertArrayEquals(ResponseCode.WARN.name().getBytes(), response.getCode().getBytes());
     }
 
     @Test
     public void testGetResponseInJSON_shouldReturnWarnResponseWhenTVPackageIsNotActive(){
         String[] input = {"1017"};
         Response response = controller.getResponseInJSON("4", input);
-        assertArrayEquals("WARN".getBytes(), response.getCode().getBytes());
+        assertArrayEquals(ResponseCode.WARN.name().getBytes(), response.getCode().getBytes());
     }
 }

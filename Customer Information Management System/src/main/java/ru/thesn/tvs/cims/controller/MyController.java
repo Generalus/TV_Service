@@ -2,6 +2,7 @@ package ru.thesn.tvs.cims.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import ru.thesn.tvs.cims.enumeration.ResponseCode;
 import ru.thesn.tvs.cims.exception.EntityNotFoundException;
 import ru.thesn.tvs.cims.exception.IllegalAccessException;
 import ru.thesn.tvs.cims.model.Account;
@@ -25,7 +26,7 @@ public class MyController {
     @RequestMapping(value = "cim", method = RequestMethod.GET)
     public @ResponseBody Response getResponseInJSON(@RequestParam String login, @RequestParam String passwordHash){
         try {
-            Response response = new Response("OK");
+            Response response = new Response(ResponseCode.OK.name());
             Account account = checkAccount(login, passwordHash);
             List<Product> products = new ArrayList<>();
             products.addAll(account.getProducts());
@@ -40,14 +41,14 @@ public class MyController {
             return response;
         }
         catch (EntityNotFoundException e){
-            return new Response("WARN", "Уведомление: " + e.getMessage());
+            return new Response(ResponseCode.WARN.name(), "Уведомление: " + e.getMessage());
         }
         catch (IllegalAccessException e){
-            return new Response("ERR", "Ошибка доступа: " + e.getMessage());
+            return new Response(ResponseCode.ERR.name(), "Ошибка доступа: " + e.getMessage());
         }
         catch (Exception e){
             e.printStackTrace();
-            return new Response("CRITICAL_ERROR", "Критическая ошибка системы: " + e.toString());
+            return new Response(ResponseCode.CRITICAL_ERROR.name(), "Критическая ошибка системы: " + e.toString());
         }
     }
 
